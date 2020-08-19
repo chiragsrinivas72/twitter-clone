@@ -86,6 +86,12 @@ AccountSchema.methods.generateToken = async function(){
     return(token)
 }
 
+AccountSchema.virtual('tweets',{
+    ref:'Tweet',
+    localField:'_id',
+    foreignField:'account'
+})
+
 const Account = mongoose.model('Account',AccountSchema)
 
 module.exports = Account

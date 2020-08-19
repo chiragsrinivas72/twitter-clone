@@ -1,6 +1,7 @@
 const express = require('express')
 require('./database/mongoose.js')
 const Account = require('./database/models/account.js')
+const Tweet = require('./database/models/tweet.js')
 const authMiddleware = require('./authentication/auth.js')
 const { compareSync } = require('bcryptjs')
 const ObjectID = require('mongodb').ObjectID
@@ -247,6 +248,56 @@ app.patch('/accounts/removeFollowing/:id',authMiddleware,async (req,res)=>{
         res.send(account)
     }
     catch (e){
+        res.send({
+            ErrorMessage:'error'
+        })
+    }
+})
+
+app.post('/tweets',authMiddleware,async (req,res)=>{
+    const tweet = new Tweet({
+        ...req.body,
+        account:req.account._id
+    })
+    try{
+        await tweet.save()
+        res.status(201)
+        res.send(tweet)
+    }
+    catch (e){
+        res.status(400)
+        res.send({
+            ErrorMessage:'error'
+        })
+    }
+})
+
+app.delete('/tweets/:id',authMiddleware,async (req,res)=>{
+    const tweet_id = req.params.id
+    try{
+        const tweet = await Tweet.findById(tweet_id)
+        if(JSON.stringify(tweet.account)!=JSON.stringify(req.account._id))
+        {
+            throw new Error()
+        }
+        await tweet.remove()
+        res.send('Tweet deleted successfully')
+    }
+    catch (e){
+        res.status(500)
+        res.send({
+            ErrorMessage:'error'
+        })
+    }
+})
+
+app.get('/tweets',authMiddleware,async (req,res)=>{
+    try{
+        await req.account.populate('tweets').execPopulate()
+        res.send(req.account.tweets)
+    }
+    catch (e){
+        res.status(400)
         res.send({
             ErrorMessage:'error'
         })
