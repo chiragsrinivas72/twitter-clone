@@ -5,12 +5,12 @@ const Tweet = require('./database/models/tweet.js')
 const authMiddleware = require('./authentication/auth.js')
 const { compareSync } = require('bcryptjs')
 const ObjectID = require('mongodb').ObjectID
-
 const app = express()
 
 app.use(express.json())
 
 app.post('/accounts',async (req,res)=>{
+    console.log(req.body)
     const account = new Account(req.body)
     const token = await account.generateToken()
 
@@ -35,6 +35,7 @@ app.post('/accounts',async (req,res)=>{
 })
 
 app.post('/accounts/login',async (req,res)=>{
+    res.setHeader('Access-Control-Allow-Headers','Authorization')
     try{
         const account = await Account.findAccountByEmailAndPassword(req.body.email,req.body.password)
         const token = await account.generateToken()
@@ -281,7 +282,9 @@ app.delete('/tweets/:id',authMiddleware,async (req,res)=>{
             throw new Error()
         }
         await tweet.remove()
-        res.send('Tweet deleted successfully')
+        res.send({
+            Message:'Tweet deleted successfully'
+        })
     }
     catch (e){
         res.status(500)
@@ -294,7 +297,16 @@ app.delete('/tweets/:id',authMiddleware,async (req,res)=>{
 app.get('/tweets',authMiddleware,async (req,res)=>{
     try{
         await req.account.populate('tweets').execPopulate()
-        res.send(req.account.tweets)
+        const data = []
+        for(var i=0;i<req.account.tweets.length;i++)
+        {
+            data.push({
+                tweet_id:req.account.tweets[i]._id,
+                tweet:req.account.tweets[i].tweet,
+                account_name:req.account.name
+            })
+        }
+        res.send(data)
     }
     catch (e){
         res.status(400)
@@ -304,6 +316,37 @@ app.get('/tweets',authMiddleware,async (req,res)=>{
     }
 })
 
-app.listen(3000,()=>{
+app.get('/accounts',authMiddleware,async (req,res)=>{
+    try{
+        const accounts = await Account.find({})
+        const account_names_with_ids = []
+        for(var i=0;i<accounts.length;i++)
+        {
+            account_names_with_ids.push({
+                account_name:accounts[i].name,
+                account_id:accounts[i]._id
+            })
+        }
+        res.send(account_names_with_ids)
+    }
+    catch (e){
+        res.send([])
+    } 
+})
+
+app.get('/accounts/getFollowing',authMiddleware,async (req,res)=>{
+    try{
+        const account = req.account
+        res.send(account.following)
+    }
+    catch (e){
+        res.status(400)
+        res.send({
+            ErrorMessage:'error'
+        })
+    }
+})
+
+app.listen(5000,()=>{
     console.log('server is running')
 })
