@@ -5,6 +5,8 @@ import People from './components/People.js';
 import CreateAccount from './components/CreateAccount.js'
 import Login from './components/Login.js'
 import { Route,BrowserRouter as Router } from 'react-router-dom';
+import SideBar from './components/SideBar';
+import { Switch } from '@material-ui/core';
 
 ReactDOM.render(
   <Router>

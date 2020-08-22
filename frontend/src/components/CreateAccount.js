@@ -106,7 +106,8 @@ class CreateAccount extends React.Component{
         })
         .then(res => res.json())
         .then((data) => {
-            console.log(data)
+            localStorage.setItem('token',data.token)
+            this.props.history.push('/Home')
         })
         .catch((e) => {
             console.log('e')

@@ -42,7 +42,7 @@ class App extends React.Component{
   {
     return(
       <div className="App">
-        <SideBar />
+        <SideBar history={this.props.history}/>
         <AddTweet getUpdatedTweets={this.getTweets}/>
         <Tweets tweetsArray={this.state.tweetsArray} getUpdatedTweets={this.getTweets}/>
       </div>

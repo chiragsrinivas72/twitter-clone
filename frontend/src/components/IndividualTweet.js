@@ -74,7 +74,7 @@ class IndividualTweet extends React.Component{
         fetch('http://localhost:5000/tweets/'+tweet_id,{
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNlYTAyZDFjMjIyNDM0OTAxNWFiNmQiLCJpYXQiOjE1OTc5Mzk3NTd9.QRel1Y4T5MAcqnSe999gjpQEczbBha4pfJ9U9DxHqSo'
+                'Authorization':'Bearer ' + localStorage['token']
               },
               method:'DELETE'
         })

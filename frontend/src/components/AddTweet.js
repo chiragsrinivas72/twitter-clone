@@ -68,7 +68,7 @@ class AddTweet extends React.Component{
         fetch('http://localhost:5000/tweets',{
           headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNlYTAyZDFjMjIyNDM0OTAxNWFiNmQiLCJpYXQiOjE1OTc5NDA1NDB9._dOpj4mVAsQ3ZCj8KQg0emYcN3xh62H5wHAkUu3Sock'
+            'Authorization':'Bearer ' + localStorage['token']
           },
           body: JSON.stringify({
               tweet:this.state.tweet

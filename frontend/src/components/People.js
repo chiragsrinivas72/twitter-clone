@@ -46,7 +46,7 @@ class People extends React.Component{
         fetch('http://localhost:5000/accounts',{
           headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNlYTAyZDFjMjIyNDM0OTAxNWFiNmQiLCJpYXQiOjE1OTc5Mzk3NTd9.QRel1Y4T5MAcqnSe999gjpQEczbBha4pfJ9U9DxHqSo'
+            'Authorization':'Bearer ' + localStorage['token']
           }
         })
         .then(res => res.json())
@@ -58,7 +58,7 @@ class People extends React.Component{
                 fetch('http://localhost:5000/accounts/getFollowing',{
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNlYTAyZDFjMjIyNDM0OTAxNWFiNmQiLCJpYXQiOjE1OTc5Mzk3NTd9.QRel1Y4T5MAcqnSe999gjpQEczbBha4pfJ9U9DxHqSo'
+                        'Authorization':'Bearer ' + localStorage['token']
                     }
                 })
             )
@@ -92,13 +92,13 @@ class People extends React.Component{
     {
         return(
             <div>
-                <SideBar />
+                <SideBar history={this.props.history}/>
                 <div style={{position:'absolute',left:'300px',width:'1200px'}}>
                     <div style={{border:'solid white',height:'50px'}}>
                         <h1 style={{display:'inline',position:'relative',left:'170px',color:'white',top:'5px'}}>Name</h1>
                         <h1 style={{display:'inline',position:'relative',left:'450px',color:'white',top:'5px'}}>Username</h1>
                     </div>
-                    <div style={{border:'solid white',position:'relative',top:'100px',cursor:'pointer'}}>
+                    <div style={this.state.People.length!=0 ? {border:'solid white',position:'relative',top:'100px',cursor:'pointer'} : {display:'none'}}>
                         {this.state.People.map((person_obj)=> 
                         <IndividualPerson  key={this.state.People.indexOf(person_obj)} 
                             ButtonStyle={this.state.Following.includes(person_obj.account_id) ? UnFollowButtonStyle : FollowButtonStyle}

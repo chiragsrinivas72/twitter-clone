@@ -100,6 +100,7 @@ class Login extends React.Component{
     {
         if(localStorage['token'])
         {
+            
             this.props.history.push('/Home')
         }
     }
