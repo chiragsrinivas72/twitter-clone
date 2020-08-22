@@ -64,7 +64,6 @@ class IndividualPerson extends React.Component{
             })
             .then(res=>res.json())
             .then((data)=>{
-                console.log(data)
                 this.props.getUpdatedPeople()
             })
             .catch((e)=>console.log('e'))
@@ -81,7 +80,6 @@ class IndividualPerson extends React.Component{
             })
             .then(res=>res.json())
             .then((data)=>{
-                console.log(data)
                 this.props.getUpdatedPeople()
             })
             .catch((e)=>console.log('e'))

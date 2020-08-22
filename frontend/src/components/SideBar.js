@@ -3,6 +3,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 var SideBarStyle={
     backgroundColor:'#000000',
@@ -15,6 +16,31 @@ var SideBarStyle={
 };
 
 class SideBar extends React.Component{
+    constructor(props)
+    {
+        super(props)
+        this.Logout=this.Logout.bind(this)
+    }
+
+    Logout()
+    {
+        fetch('http://localhost:5000/accounts/logout',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer ' + localStorage['token']
+            },
+            method:'POST'
+        })
+        .then(res=>res.json())
+        .then((data)=>{
+            console.log(data)
+            useHistory().push('/')
+        })
+        .catch((e) => {
+            console.log('e')
+        })
+    }
+
     render()
     {
         return(
@@ -23,7 +49,7 @@ class SideBar extends React.Component{
                 <hr style={{position:'relative',bottom:'4px'}}/>
                 <div style={{position:'relative',top:'15px'}}>
 
-                    <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Link to="/Home" style={{ textDecoration: 'none' }}>
                         <div style={{cursor:'pointer'}}>
                             <HomeIcon style={{color:'white',display:'inline',position:'relative',left:'25px',top:'5px'}}/>
                             <h3 style={{color:'white',position:'relative',left:'58px',display:'inline'}}>Home</h3>
@@ -45,7 +71,12 @@ class SideBar extends React.Component{
                         <AccountCircleIcon style={{color:'white',display:'inline',position:'relative',left:'25px',top:'5px'}}/>
                         <h3 style={{color:'white',position:'relative',left:'58px',display:'inline'}}>Profile</h3>
                     </div>
-                </div>  
+                </div>
+                <div style={{position:'relative',top:'540px',cursor:'pointer'}} onClick={this.Logout}>
+                    <div>
+                        <h3 style={{color:'white',position:'relative',left:'75px',display:'inline'}}>Logout</h3>
+                    </div>
+                </div>   
             </div>
         )
     }

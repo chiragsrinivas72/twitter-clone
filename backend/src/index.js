@@ -3,11 +3,12 @@ require('./database/mongoose.js')
 const Account = require('./database/models/account.js')
 const Tweet = require('./database/models/tweet.js')
 const authMiddleware = require('./authentication/auth.js')
-const { compareSync } = require('bcryptjs')
+const bodyParser = require('body-parser')
 const ObjectID = require('mongodb').ObjectID
 const app = express()
 
 app.use(express.json())
+app.use(bodyParser.urlencoded({extended:true}))
 
 app.post('/accounts',async (req,res)=>{
     console.log(req.body)
@@ -174,7 +175,11 @@ app.patch('/accounts/addFollowing/:id',authMiddleware,async (req,res)=>{
         account.following.push({
             user_id:followingAccount._id
         })
+        followingAccount.followers.push({
+            user_id:account._id
+        })
         await account.save()
+        await followingAccount.save()
         res.send(account)
     }
     catch (e){
@@ -229,7 +234,7 @@ app.patch('/accounts/removeFollowing/:id',authMiddleware,async (req,res)=>{
         {
             throw new Error()
         }
-        await Account.findOne({_id:following_id})
+        const followingAccount = await Account.findOne({_id:following_id})
         var flag = 0
         for(var i = 0;i<account.following.length;i++)
         {
@@ -245,7 +250,11 @@ app.patch('/accounts/removeFollowing/:id',authMiddleware,async (req,res)=>{
         account.following = account.following.filter((accountObject)=>{
             accountObject.user_id!=following_id
         })
+        followingAccount.followers = followingAccount.followers.filter((accountObject)=>{
+            accountObject.user_id!=account._id
+        })
         await account.save()
+        await followingAccount.save()
         res.send(account)
     }
     catch (e){
@@ -322,6 +331,7 @@ app.get('/accounts',authMiddleware,async (req,res)=>{
         const account_names_with_ids = []
         for(var i=0;i<accounts.length;i++)
         {
+            if(JSON.stringify(accounts[i]._id)!=JSON.stringify(req.account._id))
             account_names_with_ids.push({
                 account_name:accounts[i].name,
                 account_id:accounts[i]._id
