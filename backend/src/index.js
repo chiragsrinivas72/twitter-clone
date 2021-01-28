@@ -11,7 +11,6 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.post('/accounts',async (req,res)=>{
-    console.log(req.body)
     const account = new Account(req.body)
     const token = await account.generateToken()
 
