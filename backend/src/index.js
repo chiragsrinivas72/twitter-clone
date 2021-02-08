@@ -67,9 +67,18 @@ app.post('/accounts/login', async (req, res) => {
 app.post('/accounts/logout', authMiddleware, async (req, res) => {
     const account = req.account
     const token = req.token
-    account.tokens.filter((tkn) => {
-        tkn != token
-    })
+    // account.tokens.filter((tkn) => {
+    //     tkn != token
+    // })
+
+    for (var i = 0; i < account.tokens.length; i++)
+    {
+        if (account.tokens[i].token == token)
+        {
+            account.tokens.splice(i,1)
+        }    
+    }
+
     await account.save()
     res.send({
         Message: 'Logged out successfully'
