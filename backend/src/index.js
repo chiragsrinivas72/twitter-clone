@@ -67,9 +67,6 @@ app.post('/accounts/login', async (req, res) => {
 app.post('/accounts/logout', authMiddleware, async (req, res) => {
     const account = req.account
     const token = req.token
-    // account.tokens.filter((tkn) => {
-    //     tkn != token
-    // })
 
     for (var i = 0; i < account.tokens.length; i++)
     {
@@ -101,23 +98,6 @@ app.get('/accounts/me', authMiddleware, async (req, res) => {
     res.send(account)
 })
 
-// app.get('/accounts/:id',authMiddleware,async (req,res)=>{
-//     const account_id = req.params.id
-//     try{
-//         const account = await Account.findById(account_id)
-//         res.send({
-//             name:account.name,
-//             following:account.following,
-//             followers:account.followers
-//         })
-//     }
-//     catch (e){
-//         res.status(400)
-//         res.send({
-//             Message:'No user found'
-//         })
-//     }
-// })
 
 app.delete('/accounts/myAccount', authMiddleware, async (req, res) => {
     try {
