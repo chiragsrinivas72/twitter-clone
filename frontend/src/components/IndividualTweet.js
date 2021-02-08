@@ -66,6 +66,10 @@ class IndividualTweet extends React.Component{
     {
         super(props)
         this.DeleteTweet = this.DeleteTweet.bind(this)
+        this.LikeHandler = this.LikeHandler.bind(this)
+        this.state = {
+            liked:this.props.likedByUser
+        }
     }
 
     DeleteTweet()
@@ -85,6 +89,45 @@ class IndividualTweet extends React.Component{
         .catch(e=>console.log('e'))
     }
 
+    LikeHandler()
+    {
+        var tweet_id = String(this.props.tweet_id)
+        if (this.state.liked == false)
+        {
+            fetch('http://localhost:5000/LikeTweet/'+tweet_id,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer ' + localStorage['token']
+              },
+              method:'PATCH'
+            })
+            .then(res => res.json())
+                .then((data) => {
+                this.setState({liked:true})
+                this.props.getUpdatedTweets()
+            })
+            .catch(e=>console.log('e'))
+        }
+        else
+        {   console.log('unliked')
+            fetch('http://localhost:5000/UnlikeTweet/'+tweet_id,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer ' + localStorage['token']
+              },
+              method:'PATCH'
+            })
+            .then(res => res.json())
+                .then((data) => {
+                this.setState({liked:false})
+                this.props.getUpdatedTweets()
+            })
+            .catch(e=>console.log('e'))
+        }
+        
+    }
+
+
     render()
     {
         return(
@@ -92,7 +135,7 @@ class IndividualTweet extends React.Component{
                 <img src={ProfilePicture} style={ProfilePictureStyle} alt="user's profile pic"/> 
                 <h3 style={ProfileNameStyle}>{this.props.ProfileName}</h3>
                 <p style={TextStyle}>{this.props.tweet}</p>
-                <span style={LikesStyle_Liked}>&hearts;</span>
+                <span style={this.state.liked==true ? LikesStyle_Liked : LikesStyle_Unliked} onClick={this.LikeHandler}>&hearts;</span>
                 <p style={LikesCountStyle}>{this.props.no_of_likes}</p>
 
                 <DeleteIcon style={this.props.account_id != this.props.selfID ? {visibility:'hidden'} : {position:'relative',bottom:'140px',left:'950px',color:'white',cursor:'pointer'}} onClick={this.DeleteTweet}/>

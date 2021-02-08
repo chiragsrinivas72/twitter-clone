@@ -11,6 +11,24 @@ var TweetsStyle={
 
 class Tweets extends React.Component{
 
+    constructor(props)
+    {
+        super(props)
+        this.TweetLikedByLoggedInUserOrNot = this.TweetLikedByLoggedInUserOrNot.bind(this)
+    }
+
+    TweetLikedByLoggedInUserOrNot(liked_by)
+    {
+        for (var i = 0; i < liked_by.length; i++)
+        {
+            if (liked_by[i].user_id.toString() == this.props.selfID.toString())
+            {
+                return(true)
+            }    
+        }
+        return(false)
+    }
+
     render()
     {
         return(
@@ -25,6 +43,7 @@ class Tweets extends React.Component{
                         tweet = {TweetObject.tweet}
                         tweet_id={TweetObject.tweet_id}
                         account_id={TweetObject.account_id}
+                        likedByUser = {this.TweetLikedByLoggedInUserOrNot(TweetObject.liked_by)}    
                         selfID = {this.props.selfID}
                         no_of_likes={TweetObject.no_of_likes}
                         getUpdatedTweets={this.props.getUpdatedTweets}
