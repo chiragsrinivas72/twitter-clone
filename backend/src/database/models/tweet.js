@@ -12,7 +12,15 @@ const TweetSchema = new mongoose.Schema({
     },
     no_of_likes: {
         type:Number
-    }
+    },
+    liked_by: [
+        {
+            user_id: {
+                type:mongoose.Schema.Types.ObjectID,
+                required:true
+            }
+        }
+    ]
 })
 
 const Tweet = mongoose.model('Tweet',TweetSchema)

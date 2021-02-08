@@ -338,7 +338,8 @@ app.get('/tweets', authMiddleware, async (req, res) => {
                     tweet: tweets_data[i].tweet,
                     account_id : account_of_tweet._id,
                     account_name: account_of_tweet.name,
-                    no_of_likes : tweets_data[i].no_of_likes
+                    no_of_likes: tweets_data[i].no_of_likes,
+                    liked_by : tweets_data[i].liked_by
                 })
             }    
         }
@@ -378,6 +379,59 @@ app.get('/accounts/getFollowing', authMiddleware, async (req, res) => {
     }
     catch (e) {
         res.status(400)
+        res.send({
+            ErrorMessage: 'error'
+        })
+    }
+})
+
+app.patch('/LikeTweet/:id', authMiddleware, async (req, res) => {
+    var tweet_id = req.params.id
+    var account_id = req.account._id
+
+    try {
+        var tweet_obj = await Tweet.findById(tweet_id)
+
+        tweet_obj.liked_by.push({
+            user_id : account_id
+        })
+        tweet_obj.no_of_likes += 1
+        
+        await tweet_obj.save()
+
+        res.send(tweet_obj)
+    }
+    catch (e)
+    {
+        res.send({
+            ErrorMessage: 'error'
+        })
+    }
+})
+
+app.patch('/unlikeTweet/:id', authMiddleware, async (req, res) => {
+    var tweet_id = req.params.id
+    var account_id = req.account._id
+
+    try {
+        var tweet_obj = await Tweet.findById(tweet_id)
+        
+        for (var i = 0; i < tweet_obj.liked_by.length; i++)
+        {
+            if (tweet_obj.liked_by[i].user_id.toString() == account_id.toString())
+            {
+                tweet_obj.liked_by.splice(i,1)
+            }    
+        }
+  
+        tweet_obj.no_of_likes -= 1
+        
+        await tweet_obj.save()
+        
+        res.send(tweet_obj)
+    }
+    catch (e)
+    {
         res.send({
             ErrorMessage: 'error'
         })
