@@ -9,6 +9,9 @@ const TweetSchema = new mongoose.Schema({
     account:{
         type:mongoose.Schema.Types.ObjectID,
         ref:'Account'
+    },
+    no_of_likes: {
+        type:Number
     }
 })
 
