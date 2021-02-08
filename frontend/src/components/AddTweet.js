@@ -4,12 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 var AddTweetStyle={
-    position:'absolute',
-    left:'300px',
+    position:'relative',
+    left:'160px',
     border:'solid white',
     width:'1000px',
     top:'63px',
-    height:'200px'
+    height: '200px'
 
 };
 
@@ -51,7 +51,8 @@ class AddTweet extends React.Component{
     {
         super(props);
         this.state={
-            tweet:""
+            tweet: "",
+            no_of_likes:0
         };
         this.TweetHandler = this.TweetHandler.bind(this);
         this.AddTweetHandler = this.AddTweetHandler.bind(this)
@@ -71,13 +72,15 @@ class AddTweet extends React.Component{
             'Authorization':'Bearer ' + localStorage['token']
           },
           body: JSON.stringify({
-              tweet:this.state.tweet
+              tweet: this.state.tweet,
+              no_of_likes:this.state.no_of_likes
           }),
           method:'POST'
         })
         .then(res => res.json())
         .then((data) => {
             this.props.getUpdatedTweets()
+            this.setState({tweet:''})
         })
         .catch((e) => {
             console.log('e')

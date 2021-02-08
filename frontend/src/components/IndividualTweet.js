@@ -93,8 +93,9 @@ class IndividualTweet extends React.Component{
                 <h3 style={ProfileNameStyle}>{this.props.ProfileName}</h3>
                 <p style={TextStyle}>{this.props.tweet}</p>
                 <span style={LikesStyle_Liked}>&hearts;</span>
-                <p style={LikesCountStyle}>10</p>
-                <DeleteIcon style={{position:'relative',bottom:'140px',left:'950px',color:'white',cursor:'pointer'}} onClick={this.DeleteTweet}/>
+                <p style={LikesCountStyle}>{this.props.no_of_likes}</p>
+
+                <DeleteIcon style={this.props.account_id != this.props.selfID ? {visibility:'hidden'} : {position:'relative',bottom:'140px',left:'950px',color:'white',cursor:'pointer'}} onClick={this.DeleteTweet}/>
                 <hr style={HorizontalLineStyle}/>
             </div>
         );

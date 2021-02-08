@@ -2,9 +2,9 @@ import React from 'react';
 import IndividualTweet from './IndividualTweet';
 
 var TweetsStyle={
-    position:'absolute',
-    left:'300px',
-    top:'350px',
+    position:'relative',
+    left:'160px',
+    top:'150px',
     width:'1000px',
     border:'solid white',
 };
@@ -23,7 +23,10 @@ class Tweets extends React.Component{
                     <IndividualTweet  key={TweetObject.tweet_id} 
                         ProfileName={TweetObject.account_name}
                         tweet = {TweetObject.tweet}
-                        tweet_id = {TweetObject.tweet_id}
+                        tweet_id={TweetObject.tweet_id}
+                        account_id={TweetObject.account_id}
+                        selfID = {this.props.selfID}
+                        no_of_likes={TweetObject.no_of_likes}
                         getUpdatedTweets={this.props.getUpdatedTweets}
                     />)} 
                 </div>

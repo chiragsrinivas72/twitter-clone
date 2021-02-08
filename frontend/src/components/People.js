@@ -1,9 +1,7 @@
 import React from 'react';
 import SideBar from '../components/SideBar.js';
-import Button from '@material-ui/core/Button';
-import ProfilePicture from '../images/1.png';
-import IndividualTweet from './IndividualTweet.js';
 import IndividualPerson from './IndividualPerson.js';
+import PeopleImage from '../images/people_image.png';
 
 var ProfilePictureStyle={
     height:'65px',
@@ -28,6 +26,15 @@ var UnFollowButtonStyle={
     top:'35px',
 }
 
+var PeopleImageStyle = {
+    backgroundImage: `url(${PeopleImage})`,
+    height: '500px',
+    width:'1357px',
+    backgroundSize: '100% auto',
+    position: 'relative',
+    right: '59px',
+    bottom:'8px'
+}
 
 class People extends React.Component{
 
@@ -93,17 +100,19 @@ class People extends React.Component{
         return(
             <div>
                 <SideBar history={this.props.history}/>
-                <div style={{position:'absolute',left:'300px',width:'1200px'}}>
-                    <div style={{border:'solid white',height:'50px'}}>
+                <div style={{position:'absolute',left:'300px',width:'1200px',marginBottom:'200px'}}>
+                    {/* <div style={{border:'solid white',height:'50px'}}>
                         <h1 style={{display:'inline',position:'relative',left:'170px',color:'white',top:'5px'}}>Name</h1>
                         <h1 style={{display:'inline',position:'relative',left:'450px',color:'white',top:'5px'}}>Username</h1>
-                    </div>
+                    </div> */}
+                    <div style={PeopleImageStyle}></div>
                     <div style={this.state.People.length!=0 ? {border:'solid white',position:'relative',top:'100px',cursor:'pointer'} : {display:'none'}}>
                         {this.state.People.map((person_obj)=> 
                         <IndividualPerson  key={this.state.People.indexOf(person_obj)} 
                             ButtonStyle={this.state.Following.includes(person_obj.account_id) ? UnFollowButtonStyle : FollowButtonStyle}
                             ButtonValue={this.state.Following.includes(person_obj.account_id) ? "UNFOLLOW" : "FOLLOW"}
-                            account_name={person_obj.account_name}
+                                account_name={person_obj.account_name}
+                                username={person_obj.username}
                             getUpdatedPeople={this.getPeople} 
                             account_id={person_obj.account_id}/>)}
                     </div>

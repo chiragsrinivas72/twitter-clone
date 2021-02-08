@@ -1,14 +1,15 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Login_Page_Background from '../images/login_bg';
 
 var main_div_style={
     width:'500px',
     height:'380px',
     position:'absolute',
-    left:'540px',
-    top:'150px',
+    left:'180px',
+    top:'175px',
     backgroundColor:'#292929',
     borderRadius:'0.7rem'
 }
@@ -43,6 +44,16 @@ var LinkStyle={
     left:'120px',
     top:'95px',
     textDecoration:'none'
+}
+
+var outer_div_style = {
+    backgroundImage : `url(${Login_Page_Background})`,
+    backgroundPosition : 'center',
+    backgroundSize : 'cover',
+    backgroundRepeat : 'no-repeat',
+    width : '1600px',
+    height: '769px',
+    margin : '-8px'
 }
 
 class Login extends React.Component{
@@ -107,13 +118,15 @@ class Login extends React.Component{
 
     render()
     {
-        return(
-            <div style={main_div_style}>
-                <h1 style={{color:'white',position:'relative',left:'85px'}}>Login to your account</h1>
-                <TextField id="outlined-dense" label="Email" margin="dense" variant="outlined" onChange={this.emailHandler} style={EmailStyle} name='email'/>
-                <TextField type="password" id="outlined-dense" label="Password" margin="dense" variant="outlined" onChange={this.passwordHandler} style={PasswordStyle} name='password'/>
-                <Button style={ButtonStyle} variant="contained" color="black" onClick={this.LoginHandler}>LOGIN</Button>
-                <Link to='/CreateAccount' style={LinkStyle}><h4 style={{color:'white'}}>Dont have an account?Create one here</h4></Link>
+        return (
+            <div style={outer_div_style}>
+                <div style={main_div_style}>
+                    <h1 style={{color:'white',position:'relative',left:'90px'}}>Login to your account</h1>
+                    <TextField id="outlined-dense" label="Email" margin="dense" variant="outlined" onChange={this.emailHandler} style={EmailStyle} color="secondary" name='email'/>
+                    <TextField type="password" id="outlined-dense" label="Password" margin="dense" variant="outlined" onChange={this.passwordHandler} style={PasswordStyle} color="secondary" name='password'/>
+                    <Button style={ButtonStyle} variant="contained" color="black" onClick={this.LoginHandler}>LOGIN</Button>
+                    <Link to='/CreateAccount' style={LinkStyle}><h4 style={{color:'white'}}>Dont have an account ? Create one here</h4></Link>
+                </div>
             </div>
         )
     }

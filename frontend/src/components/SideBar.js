@@ -33,7 +33,6 @@ class SideBar extends React.Component{
         })
         .then(res=>res.json())
         .then((data)=>{
-            console.log(data)
             localStorage.setItem('token','')
             this.props.history.push('/')
         })
