@@ -56,6 +56,15 @@ var outer_div_style = {
     margin : '-8px'
 }
 
+var failed_login_style = {
+    color: 'red',
+    position: 'absolute',
+    left: '80px',
+    top: '215px',
+    visibility:'hidden'
+}
+
+
 class Login extends React.Component{
     constructor(props)
     {
@@ -67,6 +76,7 @@ class Login extends React.Component{
             email:'',
             password:''
         }
+        this.login_ref = React.createRef();
     }
 
     emailHandler(event)
@@ -98,9 +108,17 @@ class Login extends React.Component{
           method:'POST'
         })
         .then(res => res.json())
-        .then((data) => {
-            localStorage.setItem('token',data.token)
-            this.props.history.push('/Home')
+            .then((data) => {
+            if(data.ErrorMessage)
+            {
+                this.login_ref.current.style.visibility = "visible"
+            }
+            else
+            {
+                localStorage.setItem('token', data.token)
+                this.props.history.push('/Home')
+            }
+            
         })
         .catch((e) => {
             console.log('e')
@@ -120,10 +138,11 @@ class Login extends React.Component{
     {
         return (
             <div style={outer_div_style}>
-                <div style={main_div_style}>
+                <div style={main_div_style} className="w3-container">
                     <h1 style={{color:'white',position:'relative',left:'90px'}}>Login to your account</h1>
                     <TextField id="outlined-dense" label="Email" margin="dense" variant="outlined" onChange={this.emailHandler} style={EmailStyle} color="secondary" name='email'/>
                     <TextField type="password" id="outlined-dense" label="Password" margin="dense" variant="outlined" onChange={this.passwordHandler} style={PasswordStyle} color="secondary" name='password'/>
+                    <h4 className="w3-center w3-animate-top" ref={this.login_ref} style={failed_login_style}>Please enter the correct email and password!</h4>
                     <Button style={ButtonStyle} variant="contained" color="black" onClick={this.LoginHandler}>LOGIN</Button>
                     <Link to='/CreateAccount' style={LinkStyle}><h4 style={{color:'white'}}>Dont have an account ? Create one here</h4></Link>
                 </div>
