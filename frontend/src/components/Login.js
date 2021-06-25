@@ -2,14 +2,14 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Login_Page_Background from '../images/login_bg';
+import Login_Page_Background from '../images/login_bg.jpg';
 
 var main_div_style={
     width:'500px',
     height:'380px',
     position:'absolute',
-    left:'180px',
-    top:'175px',
+    left:'700px',
+    top:'220px',
     backgroundColor:'#292929',
     borderRadius:'0.7rem'
 }
@@ -51,8 +51,8 @@ var outer_div_style = {
     backgroundPosition : 'center',
     backgroundSize : 'cover',
     backgroundRepeat : 'no-repeat',
-    width : '1600px',
-    height: '769px',
+    width : '1920px',
+    height: '948px',
     margin : '-8px'
 }
 

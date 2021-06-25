@@ -1,16 +1,6 @@
 import React from 'react';
 import SideBar from '../components/SideBar.js';
 import IndividualPerson from './IndividualPerson.js';
-import PeopleImage from '../images/people_image.png';
-
-var ProfilePictureStyle={
-    height:'65px',
-    position:'relative',
-    left:'80px',
-    top:'27px',
-    borderRadius:'2rem',
-    display:'inline'
-};
 
 var FollowButtonStyle={
     backgroundColor:'#63C5DA',
@@ -24,16 +14,6 @@ var UnFollowButtonStyle={
     position:'absolute',
     left:'930px',
     top:'35px',
-}
-
-var PeopleImageStyle = {
-    backgroundImage: `url(${PeopleImage})`,
-    height: '500px',
-    width:'1357px',
-    backgroundSize: '100% auto',
-    position: 'relative',
-    right: '59px',
-    bottom:'8px'
 }
 
 class People extends React.Component{
