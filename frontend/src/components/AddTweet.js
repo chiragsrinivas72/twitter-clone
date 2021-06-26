@@ -43,9 +43,6 @@ var TweetBoxStyle={
     
 };
 
-
-
-
 class AddTweet extends React.Component{
 
     constructor(props)

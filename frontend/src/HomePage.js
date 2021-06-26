@@ -18,7 +18,6 @@ class App extends React.Component{
     this.getSelfIDAndImgSrc = this.getSelfIDAndImgSrc.bind(this)
   }
 
-
   getTweets()
   {
     fetch('http://localhost:5000/tweets',{
