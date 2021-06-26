@@ -11,10 +11,11 @@ class App extends React.Component{
     super(props)
     this.state={
       tweetsArray: [],
-      selfID:''
+      selfID:'',
+      selfImgSrc:''
     }
     this.getTweets = this.getTweets.bind(this)
-    this.getSelfID = this.getSelfID.bind(this)
+    this.getSelfIDAndImgSrc = this.getSelfIDAndImgSrc.bind(this)
   }
 
 
@@ -37,9 +38,9 @@ class App extends React.Component{
     })
   }
 
-  getSelfID()
+  getSelfIDAndImgSrc()
   {
-    fetch('http://localhost:5000/selfID',{
+    fetch('http://localhost:5000/selfIDAndImgSrc',{
       headers: {
         'Content-Type': 'application/json',
         'Authorization':'Bearer ' + localStorage['token']
@@ -48,7 +49,8 @@ class App extends React.Component{
     .then(res=>res.json())
     .then((data)=>{
       this.setState({
-        selfID: data.selfID
+        selfID: data.selfID,
+        selfImgSrc:data.img_src
       })
     })
     .catch((e) => {
@@ -57,7 +59,7 @@ class App extends React.Component{
   }
 
   componentDidMount() {
-    this.getSelfID()
+    this.getSelfIDAndImgSrc()
     this.getTweets()
   }
   render()
@@ -66,8 +68,8 @@ class App extends React.Component{
       <div className="App" style={{height:'100%'}}>
         <SideBar history={this.props.history} />
         <div style={{position:'absolute',left:'240px',top:'0px',width:'1345px',marginBottom:'180px'}} >
-          <AddTweet getUpdatedTweets={this.getTweets}/>
-          <Tweets tweetsArray={this.state.tweetsArray} selfID={this.state.selfID} getUpdatedTweets={this.getTweets} />
+          <AddTweet getUpdatedTweets={this.getTweets} selfImgSrc={this.state.selfImgSrc}/>
+          <Tweets tweetsArray={this.state.tweetsArray} selfID={this.state.selfID} getUpdatedTweets={this.getTweets}/>
         </div>
       </div>
     )

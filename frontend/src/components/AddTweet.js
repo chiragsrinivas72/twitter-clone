@@ -29,6 +29,7 @@ var TweetButtonStyle={
 
 var ProfilePictureStyle={
     height:'65px',
+    width:'60px',
     position:'relative',
     left:'10px',
     borderRadius:'2rem'
@@ -85,9 +86,9 @@ class AddTweet extends React.Component{
         })
         .catch((e) => {
             console.log('e')
-        })
-        
+        })   
     }
+
     render()
     {
         return(
@@ -96,7 +97,7 @@ class AddTweet extends React.Component{
                 <h2 style={{position:"relative",left:'10px',color:'white',top:'15px'}}>Tweet</h2>
             </div>
             <hr style={HorizontalLineStyle}/>
-            <img src={ProfilePicture} style={ProfilePictureStyle} alt="users's profile pic"/>
+            <img src={this.props.selfImgSrc} style={ProfilePictureStyle} alt="users's profile pic"/>
             <TextField id="standard-basic" placeholder="What's happening?" value={this.state.tweet} style={TweetBoxStyle} onChange={this.TweetHandler}/>
             <Button variant="contained" color="primary" onClick={this.AddTweetHandler} style={TweetButtonStyle}>Tweet</Button>
         </div>

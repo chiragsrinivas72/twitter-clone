@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 var ProfilePictureStyle={
     height:'65px',
     position:'relative',
+    width:'60px',
     left:'10px',
     top:'10px',
     borderRadius:'2rem'
@@ -190,7 +191,7 @@ class IndividualTweet extends React.Component{
     {
         return(
             <div style={IndividualTweetStyle}>
-                <img src={ProfilePicture} style={ProfilePictureStyle} alt="user's profile pic"/> 
+                <img src={this.props.account_img_src} style={ProfilePictureStyle} alt="user's profile pic"/> 
                 <h3 style={ProfileNameStyle}>{this.props.ProfileName}</h3>
                 <p style={TextStyle}>{this.props.tweet}</p>
                 <span style={this.state.liked==true ? LikesStyle_Liked : LikesStyle_Unliked} onClick={this.LikeHandler}>&hearts;</span>

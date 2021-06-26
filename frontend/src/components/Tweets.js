@@ -48,6 +48,7 @@ class Tweets extends React.Component{
                         no_of_likes={TweetObject.no_of_likes}
                         getUpdatedTweets={this.props.getUpdatedTweets}
                         tweet_date={TweetObject.tweet_date}
+                        account_img_src={TweetObject.account_img_src}
                     />)} 
                 </div>
             </div>

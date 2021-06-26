@@ -22,10 +22,11 @@ const upload = multer({storage:storage})
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/selfID', authMiddleware, async (req, res) => {
+app.get('/selfIDAndImgSrc', authMiddleware, async (req, res) => {
     const account = await Account.findById(req.account._id)
     res.send({
-        selfID : account._id
+        selfID : account._id,
+        img_src:'http://localhost:5000/image/'+account.img
     })
 })
 
@@ -346,7 +347,8 @@ app.get('/tweets', authMiddleware, async (req, res) => {
                     account_name: account_of_tweet.name,
                     no_of_likes: tweets_data[i].no_of_likes,
                     liked_by : tweets_data[i].liked_by,
-                    tweet_date:tweets_data[i].tweet_date
+                    tweet_date:tweets_data[i].tweet_date,
+                    account_img_src:'http://localhost:5000/image/'+account_of_tweet.img
                 })
             }    
         }
@@ -454,6 +456,11 @@ app.patch('/unlikeTweet/:id', authMiddleware, async (req, res) => {
             ErrorMessage: 'error'
         })
     }
+})
+
+app.get('/image/:imageName',function (req,res){
+    var image_name = req.params.imageName
+    res.sendFile('/home/chirag/Documents/projects/twitter-clone/backend/public/images/'+image_name)
 })
 
 app.listen(5000, () => {
