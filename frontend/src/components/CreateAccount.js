@@ -1,14 +1,15 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import CreateAccount_Page_Background from '../images/login_bg';
+import CreateAccount_Page_Background from '../images/login_bg.jpg';
 import { Link } from 'react-router-dom';
+import Input from '@material-ui/core/Input';
 
 var main_div_style={
     width:'500px',
-    height:'450px',
+    height:'530px',
     position:'absolute',
-    left:'180px',
+    left:'700px',
     top:'175px',
     backgroundColor:'#292929',
     borderRadius:'0.7rem'
@@ -49,7 +50,7 @@ var ButtonStyle={
     height:'35px',
     width:'200px',
     left:'145px',
-    top:'70px',
+    top:'50px',
     backgroundColor:'#63C5DA'
 }
 
@@ -58,15 +59,15 @@ var outer_div_style = {
     backgroundPosition : 'center',
     backgroundSize : 'cover',
     backgroundRepeat : 'no-repeat',
-    width : '1600px',
-    height: '769px',
+    width : '1920px',
+    height: '948px',
     margin : '-8px'
 }
 
 var LinkStyle={
     position:'relative',
     left:'120px',
-    top:'75px',
+    top:'55px',
     textDecoration:'none'
 }
 
@@ -76,6 +77,13 @@ var UserNameStyle = {
     width:'400px',
     backgroundColor: '#48494B',
     top:'10px'
+}
+
+var UploadFileStyle = {
+    position:'relative',
+    top:'20px',
+    left:'50px',
+    color:'white'
 }
 
 class CreateAccount extends React.Component{
@@ -129,16 +137,16 @@ class CreateAccount extends React.Component{
 
     CreateAccountHandler()
     {
+        const form_data = new FormData()
+        var input_file_ele = document.getElementById("file-input")
+        form_data.append('name',this.state.name)
+        form_data.append('username',this.state.username)
+        form_data.append('email',this.state.email)
+        form_data.append('password',this.state.password)
+        form_data.append('image',input_file_ele.files[0])
+    
         fetch('http://localhost:5000/accounts',{
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              name: this.state.name,
-              username:this.state.username,
-              email:this.state.email,
-              password:this.state.password
-          }),
+          body: form_data,
           method:'POST'
         })
         .then(res => res.json())
@@ -161,6 +169,8 @@ class CreateAccount extends React.Component{
                     <TextField id="outlined-dense" label="Username" margin="dense" variant="outlined" onChange={this.usernameHandler} style={UserNameStyle} color="secondary" name='username'/>
                     <TextField id="outlined-dense" label="Email" margin="dense" variant="outlined" onChange={this.emailHandler} style={EmailStyle} color="secondary" name='email'/>
                     <TextField id="outlined-dense" label="Password" type = "password" margin="dense" variant="outlined" onChange={this.passwordHandler} style={PasswordStyle} color="secondary" name='password'/>
+                    <h3 style={{position:'relative',top:'30px',left:'50px',color:'white'}}>Upload profile picture</h3>
+                    <Input type="file" id="file-input" style={UploadFileStyle} name="image"></Input>
                     <Button style={ButtonStyle} variant="contained" color="black" onClick={this.CreateAccountHandler}>SUBMIT</Button>
                     <Link to='/' style={LinkStyle}><h4 style={{color:'white'}}>Already have an account ? Sign in here</h4></Link>
                 </form>

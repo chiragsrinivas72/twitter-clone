@@ -1,19 +1,20 @@
 import React from 'react';
 import SideBar from '../components/SideBar.js';
 import IndividualPerson from './IndividualPerson.js';
+import Grid from '@material-ui/core/Grid';
 
 var FollowButtonStyle={
     backgroundColor:'#63C5DA',
-    position:'absolute',
-    left:'930px',
-    top:'35px'
+    position:'relative',
+    bottom:'80px',
+    left:'140px'
 }
 
 var UnFollowButtonStyle={
     backgroundColor:'red',
-    position:'absolute',
-    left:'930px',
-    top:'35px',
+    position:'relative',
+    bottom:'80px',
+    left:'140px'
 }
 
 class People extends React.Component{
@@ -81,8 +82,8 @@ class People extends React.Component{
             <div>
                 <SideBar history={this.props.history}/>
                 <div style={{position:'absolute',left:'300px',width:'1200px',marginBottom:'200px'}}>
-                    <div style={this.state.People.length!=0 ? {border:'solid white',position:'relative',top:'100px',cursor:'pointer'} : {display:'none'}}>
-                        {this.state.People.map((person_obj)=> 
+                    <Grid container spacing={10} style={{position:'relative',top:'100px',display:'flex'}}>
+                        {this.state.People.map((person_obj)=>
                         <IndividualPerson  key={this.state.People.indexOf(person_obj)} 
                             ButtonStyle={this.state.Following.includes(person_obj.account_id) ? UnFollowButtonStyle : FollowButtonStyle}
                             ButtonValue={this.state.Following.includes(person_obj.account_id) ? "UNFOLLOW" : "FOLLOW"}
@@ -90,7 +91,7 @@ class People extends React.Component{
                                 username={person_obj.username}
                             getUpdatedPeople={this.getPeople} 
                             account_id={person_obj.account_id}/>)}
-                    </div>
+                    </Grid>
                 </div>
             </div>    
             

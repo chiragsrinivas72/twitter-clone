@@ -6,6 +6,18 @@ const authMiddleware = require('./authentication/auth.js')
 const bodyParser = require('body-parser')
 const ObjectID = require('mongodb').ObjectID
 const app = express()
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination:function(req,file,callback){
+        callback(null,'./public/images')
+    },
+    filename:function(req,file,callback){
+        callback(null,new Date().toISOString()+file.originalname)
+    }
+})
+
+const upload = multer({storage:storage})
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -17,10 +29,13 @@ app.get('/selfID', authMiddleware, async (req, res) => {
     })
 })
 
-app.post('/accounts', async (req, res) => {
-    const account = new Account(req.body)
+app.post('/accounts',upload.single('image'),async (req, res) => {
+    const account = new Account({
+        ...req.body,
+        img:req.file.filename
+    })
+    //const account = new Account(req.body)
     const token = await account.generateToken()
-
     account.tokens.push({
         token: token
     })
@@ -199,7 +214,7 @@ app.patch('/accounts/removeFollower/:id', authMiddleware, async (req, res) => {
             throw new Error()
         }
         account.followers = account.followers.filter((accountObject) => {
-            accountObject.user_id != follower_id
+            return JSON.stringify(accountObject.user_id) != JSON.stringify(follower_id)
         })
         await account.save()
         res.send(account)
@@ -229,11 +244,13 @@ app.patch('/accounts/removeFollowing/:id', authMiddleware, async (req, res) => {
         if (flag == 0) {
             throw new Error()
         }
+
         account.following = account.following.filter((accountObject) => {
-            accountObject.user_id != following_id
+            return JSON.stringify(accountObject.user_id) != JSON.stringify(followingAccount._id)
         })
+        
         followingAccount.followers = followingAccount.followers.filter((accountObject) => {
-            accountObject.user_id != account._id
+            return JSON.stringify(accountObject.user_id) != JSON.stringify(account._id)
         })
         await account.save()
         await followingAccount.save()
@@ -328,7 +345,8 @@ app.get('/tweets', authMiddleware, async (req, res) => {
                     account_id : account_of_tweet._id,
                     account_name: account_of_tweet.name,
                     no_of_likes: tweets_data[i].no_of_likes,
-                    liked_by : tweets_data[i].liked_by
+                    liked_by : tweets_data[i].liked_by,
+                    tweet_date:tweets_data[i].tweet_date
                 })
             }    
         }
@@ -355,6 +373,17 @@ app.get('/accounts', authMiddleware, async (req, res) => {
                 })
         }
         res.send(account_names_with_ids)
+    }
+    catch (e) {
+        res.send([])
+    }
+})
+
+//testing
+app.get('/accounts/all', authMiddleware, async (req, res) => {
+    try {
+        const accounts = await Account.find({})
+        res.send(accounts)
     }
     catch (e) {
         res.send([])

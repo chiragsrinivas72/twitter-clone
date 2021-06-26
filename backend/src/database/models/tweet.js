@@ -20,7 +20,10 @@ const TweetSchema = new mongoose.Schema({
                 required:true
             }
         }
-    ]
+    ],
+    tweet_date:{
+        type:Date
+    }
 })
 
 const Tweet = mongoose.model('Tweet',TweetSchema)

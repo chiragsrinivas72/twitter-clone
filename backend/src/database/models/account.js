@@ -24,6 +24,10 @@ const AccountSchema = new mongoose.Schema({
             }
         }
     },
+    img:{
+        type:String,
+        required:true
+    },
     password:{
         type:String,
         required:true,

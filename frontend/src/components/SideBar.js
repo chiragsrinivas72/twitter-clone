@@ -72,7 +72,7 @@ class SideBar extends React.Component{
                         <h3 style={{color:'white',position:'relative',left:'58px',display:'inline'}}>Profile</h3>
                     </div>
                 </div>
-                <div style={{position:'relative',top:'540px',cursor:'pointer'}} onClick={this.Logout}>
+                <div style={{position:'relative',top:'700px',cursor:'pointer'}} onClick={this.Logout}>
                     <div>
                         <h3 style={{color:'white',position:'relative',left:'75px',display:'inline'}}>Logout</h3>
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import ProfilePicture from '../images/1.png';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import ProfilePicture from '../images/1.png'
 
 var AddTweetStyle={
     position:'relative',
@@ -73,7 +73,8 @@ class AddTweet extends React.Component{
           },
           body: JSON.stringify({
               tweet: this.state.tweet,
-              no_of_likes:this.state.no_of_likes
+              no_of_likes:this.state.no_of_likes,
+              tweet_date:new Date()
           }),
           method:'POST'
         })

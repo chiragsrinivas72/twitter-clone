@@ -47,6 +47,7 @@ class Tweets extends React.Component{
                         selfID = {this.props.selfID}
                         no_of_likes={TweetObject.no_of_likes}
                         getUpdatedTweets={this.props.getUpdatedTweets}
+                        tweet_date={TweetObject.tweet_date}
                     />)} 
                 </div>
             </div>

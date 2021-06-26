@@ -128,8 +128,7 @@ class Login extends React.Component{
     componentWillMount()
     {
         if(localStorage['token'])
-        {
-            
+        { 
             this.props.history.push('/Home')
         }
     }

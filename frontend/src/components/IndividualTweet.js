@@ -33,7 +33,7 @@ var IndividualTweetStyle={
 var HorizontalLineStyle={
     width:'998px',
     position:'relative',
-    bottom:'142px'
+    bottom:'190px'
 };
 
 var LikesStyle_Unliked={
@@ -127,6 +127,64 @@ class IndividualTweet extends React.Component{
         
     }
 
+    DifferenceInDate(tweet_date)
+    {
+        var current_date = new Date()
+        var current_date_year = current_date.getFullYear()
+        var current_date_month = current_date.getMonth()
+        var current_date_day = current_date.getDay()
+        var current_date_hours = current_date.getHours()
+        var current_date_minutes = current_date.getMinutes()
+        var current_date_seconds = current_date.getSeconds()
+
+        var tweet_date_temp = new Date(tweet_date)
+        var tweet_date_temp_year = tweet_date_temp.getFullYear()
+        var tweet_date_temp_month = tweet_date_temp.getMonth()
+        var tweet_date_temp_day = tweet_date_temp.getDay()
+        var tweet_date_temp_hours = tweet_date_temp.getHours()
+        var tweet_date_temp_minutes = tweet_date_temp.getMinutes()
+        var tweet_date_temp_seconds = tweet_date_temp.getSeconds()
+
+        var result = ""
+
+        if(current_date_year!=tweet_date_temp_year)
+        {
+            result+=String(current_date_year-tweet_date_temp_year)
+            result+="y"
+            return result
+        }
+        if(current_date_month!=tweet_date_temp_month)
+        {
+            result+=String(current_date_month-tweet_date_temp_month)
+            result+="m"
+            return result
+        }
+        if(current_date_day!=tweet_date_temp_day)
+        {
+            result+=String(current_date_day-tweet_date_temp_day)
+            result+="d"
+            return result
+        }
+        if(current_date_hours!=tweet_date_temp_hours)
+        {
+            result+=String(current_date_hours-tweet_date_temp_hours)
+            result+="h"
+            return result
+        }
+        if(current_date_minutes!=tweet_date_temp_minutes)
+        {
+            result+=String(current_date_minutes-tweet_date_temp_minutes)
+            result+="m"
+            return result
+        }
+        if(current_date_seconds!=tweet_date_temp_seconds)
+        {
+            result+=String(current_date_seconds-tweet_date_temp_seconds)
+            result+="s"
+            return result
+        }
+        return "0s"
+    }
 
     render()
     {
@@ -137,8 +195,8 @@ class IndividualTweet extends React.Component{
                 <p style={TextStyle}>{this.props.tweet}</p>
                 <span style={this.state.liked==true ? LikesStyle_Liked : LikesStyle_Unliked} onClick={this.LikeHandler}>&hearts;</span>
                 <p style={LikesCountStyle}>{this.props.no_of_likes}</p>
-
-                <DeleteIcon style={this.props.account_id != this.props.selfID ? {visibility:'hidden'} : {position:'relative',bottom:'140px',left:'950px',color:'white',cursor:'pointer'}} onClick={this.DeleteTweet}/>
+                <h6 style={{color:'white',position:'relative',bottom:'240px','left':'953px'}}>{this.DifferenceInDate(this.props.tweet_date)}</h6>
+                <DeleteIcon style={this.props.account_id != this.props.selfID ? {visibility:'hidden'} : {position:'relative',bottom:'190px',left:'950px',color:'white',cursor:'pointer'}} onClick={this.DeleteTweet}/>
                 <hr style={HorizontalLineStyle}/>
             </div>
         );
