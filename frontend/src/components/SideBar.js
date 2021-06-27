@@ -2,8 +2,7 @@ import React from 'react';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import {Link} from 'react-router-dom';
 
 var SideBarStyle={
     backgroundColor:'#000000',
@@ -66,12 +65,14 @@ class SideBar extends React.Component{
                     <hr style={{position:'relative',top:'60px'}}/>
                         
                 </div>
-                <div style={{position:'relative',top:'100px',cursor:'pointer'}}>
-                    <div>
-                        <AccountCircleIcon style={{color:'white',display:'inline',position:'relative',left:'25px',top:'5px'}}/>
-                        <h3 style={{color:'white',position:'relative',left:'58px',display:'inline'}}>Profile</h3>
+                <Link to="/profile" style={{ textDecoration: 'none' }}>
+                    <div style={{position:'relative',top:'100px',cursor:'pointer'}}>
+                        <div>
+                            <AccountCircleIcon style={{color:'white',display:'inline',position:'relative',left:'25px',top:'5px'}}/>
+                            <h3 style={{color:'white',position:'relative',left:'58px',display:'inline'}}>Profile</h3>
+                        </div>
                     </div>
-                </div>
+                </Link>
                 <div style={{position:'relative',top:'700px',cursor:'pointer'}} onClick={this.Logout}>
                     <div>
                         <h3 style={{color:'white',position:'relative',left:'75px',display:'inline'}}>Logout</h3>

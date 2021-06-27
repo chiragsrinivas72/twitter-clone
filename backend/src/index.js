@@ -111,7 +111,34 @@ app.post('/accounts/logoutEverywhere', authMiddleware, async (req, res) => {
 
 app.get('/accounts/me', authMiddleware, async (req, res) => {
     const account = req.account
-    res.send(account)
+    var following = []
+    for(var i=0;i<account.following.length;i++)
+    {
+        const following_account = await Account.findById(account.following[i].user_id)
+        following.push({
+            account_name:following_account.name,
+            account_username:following_account.username,
+            account_img_src:'http://localhost:5000/image/'+following_account.img
+        })
+    }
+    var followers = []
+    for(var i=0;i<account.followers.length;i++)
+    {
+        const follower_account = await Account.findById(account.followers[i].user_id)
+        followers.push({
+            account_name:follower_account.name,
+            account_username:follower_account.username,
+            account_img_src:'http://localhost:5000/image/'+follower_account.img
+        })
+    }
+    const data = {
+        account_name:account.name,
+        account_username:account.username,
+        account_following:following,
+        account_followers:followers,
+        account_img_src:'http://localhost:5000/image/'+account.img
+    }
+    res.send(data)
 })
 
 
