@@ -2,7 +2,6 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
-import Button from '@material-ui/core/Button';
 
 var FollowingFollowersCardStyle={
     position:'relative',
@@ -24,6 +23,13 @@ var ProfilePictureInFollowingFollowersCard={
     borderRadius:'3rem'
 }
 
+var ButtonStyle={
+    backgroundColor:'red',
+    position:'relative',
+    left:'275px',
+    bottom:'5px'
+}
+
 class FollowingFollowersCard extends React.Component{
 
     constructor(props)
@@ -40,10 +46,10 @@ class FollowingFollowersCard extends React.Component{
                 <ClearIcon style={{position:'relative',bottom:'52px',left:'510px',cursor:'pointer'}} onClick={this.props.ClearFollowingFollowersCardHandler}/>
                 <div>
                     {this.props.following_or_follower_data.map((accountObject) => 
-                        <div>
+                        <div key={accountObject.account_username}>
                             <img style={ProfilePictureInFollowingFollowersCard} src={accountObject.account_img_src}/>
                             <h1 style={{display:'inline',position:'relative',left:'60px'}}>{accountObject.account_name}</h1>
-                            <h1 style={{display:'inline',position:'relative',left:'240px'}}>{"@"+accountObject.account_username}</h1>
+                            <h1 style={{display:'inline',position:'relative',left:'280px'}}>{"@"+accountObject.account_username}</h1>
                         </div>
                     )} 
                 </div>

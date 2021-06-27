@@ -398,7 +398,8 @@ app.get('/accounts', authMiddleware, async (req, res) => {
                 account_names_with_ids.push({
                     account_name: accounts[i].name,
                     username:accounts[i].username,
-                    account_id: accounts[i]._id
+                    account_id: accounts[i]._id,
+                    account_img_src:'http://localhost:5000/image/'+accounts[i].img
                 })
         }
         res.send(account_names_with_ids)

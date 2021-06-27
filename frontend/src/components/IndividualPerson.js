@@ -8,10 +8,10 @@ import Grid from '@material-ui/core/Grid';
 var ProfilePictureStyle={
     height:'85px',
     position:'relative',
-    left:'17px',
-    top:'17px',
-    borderRadius:'3rem',
-    display:'inline'
+    width:'80px',
+    left:'10px',
+    top:'20px',
+    borderRadius:'3rem'
 };
 
 var PersonCardStyle={
@@ -73,7 +73,7 @@ class IndividualPerson extends React.Component{
             <Grid item xs={12} sm={6} md={4}>
                 <Card style={PersonCardStyle}>
                     <CardContent>
-                    <img src={ProfilePicture} style={ProfilePictureStyle} />
+                    <img src={this.props.account_img_src} style={ProfilePictureStyle} />
                     <h2 style={{position:'relative',left:'170px',bottom:'80px'}}>{this.props.account_name}</h2>
                     <h2 style={{position:'relative',left:'165px',bottom:'90px'}}>{'@'+this.props.username}</h2>
                     <Button style={this.props.ButtonStyle} onClick={this.FollowOrUnFollowHandler}>{this.props.ButtonValue}</Button>

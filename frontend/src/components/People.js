@@ -87,10 +87,12 @@ class People extends React.Component{
                         <IndividualPerson  key={this.state.People.indexOf(person_obj)} 
                             ButtonStyle={this.state.Following.includes(person_obj.account_id) ? UnFollowButtonStyle : FollowButtonStyle}
                             ButtonValue={this.state.Following.includes(person_obj.account_id) ? "UNFOLLOW" : "FOLLOW"}
-                                account_name={person_obj.account_name}
-                                username={person_obj.username}
+                            account_name={person_obj.account_name}
+                            username={person_obj.username}
                             getUpdatedPeople={this.getPeople} 
-                            account_id={person_obj.account_id}/>)}
+                            account_id={person_obj.account_id}
+                            account_img_src={person_obj.account_img_src}
+                            />)}
                     </Grid>
                 </div>
             </div>    
