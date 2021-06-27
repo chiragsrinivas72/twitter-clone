@@ -1,9 +1,10 @@
 import React from 'react';
-import ProfilePicture from '../images/1.png';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import {Link} from 'react-router-dom';
+
 
 var ProfilePictureStyle={
     height:'85px',
@@ -74,7 +75,9 @@ class IndividualPerson extends React.Component{
                 <Card style={PersonCardStyle}>
                     <CardContent>
                     <img src={this.props.account_img_src} style={ProfilePictureStyle} />
-                    <h2 style={{position:'relative',left:'170px',bottom:'80px'}}>{this.props.account_name}</h2>
+                    <Link to={"/profile/"+this.props.account_id} style={{ textDecoration: 'none' }}>
+                        <h2 style={{position:'relative',left:'170px',bottom:'80px'}}>{this.props.account_name}</h2>
+                    </Link>
                     <h2 style={{position:'relative',left:'165px',bottom:'90px'}}>{'@'+this.props.username}</h2>
                     <Button style={this.props.ButtonStyle} onClick={this.FollowOrUnFollowHandler}>{this.props.ButtonValue}</Button>
                     </CardContent>

@@ -109,8 +109,8 @@ app.post('/accounts/logoutEverywhere', authMiddleware, async (req, res) => {
     })
 })
 
-app.get('/accounts/me', authMiddleware, async (req, res) => {
-    const account = req.account
+app.get('/accounts/:id', authMiddleware, async (req, res) => {
+    const account = await Account.findById(req.params.id)
     var following = []
     for(var i=0;i<account.following.length;i++)
     {
@@ -118,7 +118,8 @@ app.get('/accounts/me', authMiddleware, async (req, res) => {
         following.push({
             account_name:following_account.name,
             account_username:following_account.username,
-            account_img_src:'http://localhost:5000/image/'+following_account.img
+            account_img_src:'http://localhost:5000/image/'+following_account.img,
+            account_id:following_account._id
         })
     }
     var followers = []
@@ -128,7 +129,8 @@ app.get('/accounts/me', authMiddleware, async (req, res) => {
         followers.push({
             account_name:follower_account.name,
             account_username:follower_account.username,
-            account_img_src:'http://localhost:5000/image/'+follower_account.img
+            account_img_src:'http://localhost:5000/image/'+follower_account.img,
+            account_id:follower_account._id
         })
     }
     const data = {
@@ -191,8 +193,6 @@ app.patch('/accounts/addFollower/:id', authMiddleware, async (req, res) => {
 app.patch('/accounts/addFollowing/:id', authMiddleware, async (req, res) => {
     const account = req.account
     const following_id = req.params.id
-
-
     try {
         if (following_id == account._id) {
             throw new Error()
@@ -410,7 +410,7 @@ app.get('/accounts', authMiddleware, async (req, res) => {
 })
 
 //testing
-app.get('/accounts/all', authMiddleware, async (req, res) => {
+app.get('/accountsAll', authMiddleware, async (req, res) => {
     try {
         const accounts = await Account.find({})
         res.send(accounts)
@@ -420,7 +420,7 @@ app.get('/accounts/all', authMiddleware, async (req, res) => {
     }
 })
 
-app.get('/accounts/getFollowing', authMiddleware, async (req, res) => {
+app.get('/getFollowing', authMiddleware, async (req, res) => {
     try {
         const account = req.account
         res.send(account.following)

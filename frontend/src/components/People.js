@@ -24,9 +24,11 @@ class People extends React.Component{
         super(props);
         this.state={
             Following:[],
-            People:[]
+            People:[],
+            selfID:""
         };
         this.getPeople = this.getPeople.bind(this)
+        this.getSelfIDAndImgSrc=this.getSelfIDAndImgSrc.bind(this)
     }
 
     getPeople()
@@ -43,7 +45,7 @@ class People extends React.Component{
                 People:data
             })
             return(
-                fetch('http://localhost:5000/accounts/getFollowing',{
+                fetch('http://localhost:5000/getFollowing',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization':'Bearer ' + localStorage['token']
@@ -61,6 +63,7 @@ class People extends React.Component{
             this.setState({
                 Following:following
             })
+            console.log(this.state.following)
         })
         .catch((e) => {
             console.log('e')
@@ -72,15 +75,35 @@ class People extends React.Component{
 
     }
 
+    getSelfIDAndImgSrc()
+    {
+        fetch('http://localhost:5000/selfIDAndImgSrc',{
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + localStorage['token']
+        }
+            })
+        .then(res=>res.json())
+        .then((data)=>{
+        this.setState({
+            selfID: data.selfID
+        })
+        })
+        .catch((e) => {
+            console.log('e')
+        })
+    }
+
     componentDidMount(){
         
         this.getPeople()
+        this.getSelfIDAndImgSrc()
     }
     render()
     {
         return(
             <div>
-                <SideBar history={this.props.history}/>
+                <SideBar history={this.props.history} self_account_id={this.state.selfID}/>
                 <div style={{position:'absolute',left:'300px',width:'1200px',marginBottom:'200px'}}>
                     <Grid container spacing={10} style={{position:'relative',top:'100px',display:'flex'}}>
                         {this.state.People.map((person_obj)=>

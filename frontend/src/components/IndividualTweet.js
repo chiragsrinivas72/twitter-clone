@@ -1,6 +1,6 @@
 import React from 'react';
-import ProfilePicture from '../images/1.png';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {Link} from 'react-router-dom';
 
 var ProfilePictureStyle={
     height:'65px',
@@ -192,7 +192,9 @@ class IndividualTweet extends React.Component{
         return(
             <div style={IndividualTweetStyle}>
                 <img src={this.props.account_img_src} style={ProfilePictureStyle} alt="user's profile pic"/> 
-                <h3 style={ProfileNameStyle}>{this.props.ProfileName}</h3>
+                <Link to={"/profile/"+this.props.account_id} style={{ textDecoration: 'none' }}>
+                    <h3 style={ProfileNameStyle}>{this.props.ProfileName}</h3>
+                </Link>
                 <p style={TextStyle}>{this.props.tweet}</p>
                 <span style={this.state.liked==true ? LikesStyle_Liked : LikesStyle_Unliked} onClick={this.LikeHandler}>&hearts;</span>
                 <p style={LikesCountStyle}>{this.props.no_of_likes}</p>

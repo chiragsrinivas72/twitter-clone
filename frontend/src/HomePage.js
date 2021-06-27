@@ -61,11 +61,12 @@ class App extends React.Component{
     this.getSelfIDAndImgSrc()
     this.getTweets()
   }
+
   render()
   {
     return(
       <div className="App" style={{height:'100%'}}>
-        <SideBar history={this.props.history} />
+        <SideBar history={this.props.history} self_account_id={this.state.selfID}/>
         <div style={{position:'absolute',left:'240px',top:'0px',width:'1345px',marginBottom:'180px'}} >
           <AddTweet getUpdatedTweets={this.getTweets} selfImgSrc={this.state.selfImgSrc}/>
           <Tweets tweetsArray={this.state.tweetsArray} selfID={this.state.selfID} getUpdatedTweets={this.getTweets}/>

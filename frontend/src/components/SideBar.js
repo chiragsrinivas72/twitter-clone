@@ -65,7 +65,7 @@ class SideBar extends React.Component{
                     <hr style={{position:'relative',top:'60px'}}/>
                         
                 </div>
-                <Link to="/profile" style={{ textDecoration: 'none' }}>
+                <Link to={"/profile/"+this.props.self_account_id} style={{ textDecoration: 'none' }}>
                     <div style={{position:'relative',top:'100px',cursor:'pointer'}}>
                         <div>
                             <AccountCircleIcon style={{color:'white',display:'inline',position:'relative',left:'25px',top:'5px'}}/>

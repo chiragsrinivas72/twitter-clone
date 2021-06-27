@@ -16,7 +16,7 @@ ReactDOM.render(
     <Route path='/CreateAccount' component={CreateAccount} />
     <Route path='/Home' component={HomePage} />
     <Route path="/people" component={People} />
-    <Route path="/profile" component={Profile}/>
+    <Route path="/profile/:id" component={Profile}/>
   </Router>,
   document.getElementById('root')
 );

@@ -46,6 +46,7 @@ class Profile extends React.Component{
     {
         super(props)
         this.state={
+            selfID:"",
             following_follower_type : "",
             account_username:"",
             account_name:"",
@@ -55,12 +56,32 @@ class Profile extends React.Component{
         }
         this.FollowingFollowerTypeHandler=this.FollowingFollowerTypeHandler.bind(this)
         this.ClearFollowingFollowersCardHandler=this.ClearFollowingFollowersCardHandler.bind(this)
-        this.getSelfProfile=this.getSelfProfile.bind(this)
+        this.getProfile=this.getProfile.bind(this)
+        this.getSelfIDAndImgSrc=this.getSelfIDAndImgSrc.bind(this)
     }
 
-    getSelfProfile()
+    getSelfIDAndImgSrc()
     {
-        fetch('http://localhost:5000/accounts/me',{
+        fetch('http://localhost:5000/selfIDAndImgSrc',{
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + localStorage['token']
+        }
+            })
+        .then(res=>res.json())
+        .then((data)=>{
+        this.setState({
+            selfID: data.selfID
+        })
+        })
+        .catch((e) => {
+            console.log('e')
+        })
+    }
+
+    getProfile()
+    {
+        fetch('http://localhost:5000/accounts/'+this.props.match.params.id,{
           headers: {
             'Content-Type': 'application/json',
             'Authorization':'Bearer ' + localStorage['token']
@@ -83,7 +104,8 @@ class Profile extends React.Component{
 
     componentDidMount(event)
     {
-        this.getSelfProfile()
+        this.getProfile()
+        this.getSelfIDAndImgSrc()
     }
 
     FollowingFollowerTypeHandler(event)
@@ -101,11 +123,17 @@ class Profile extends React.Component{
         })
     }
 
+    component()
+    {
+        console.log("hi")
+    }
+
     render()
   {
+    this.getProfile()
     return(
       <div className="App" style={{height:'100%'}}>
-        <SideBar history={this.props.history} />
+        <SideBar history={this.props.history} self_account_id={this.state.selfID}/>
         <div style={{position:'absolute',left:'240px',top:'0px',width:'1345px',marginBottom:'180px'}} >
             <Card style={ProfileCardStyle}>
                 <CardContent>
