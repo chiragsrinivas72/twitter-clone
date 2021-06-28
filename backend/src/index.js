@@ -329,22 +329,55 @@ app.delete('/tweets/:id', authMiddleware, async (req, res) => {
     }
 })
 
-app.get('/selftweets', authMiddleware, async (req, res) => {
+app.get('/selfAndLikedTweets/:id', authMiddleware, async (req, res) => {
     try {
-        await req.account.populate('tweets').execPopulate()
-        const data = []
-        for (var i = 0; i < req.account.tweets.length; i++) {
-            data.push({
-                tweet_id: req.account.tweets[i]._id,
-                tweet: req.account.tweets[i].tweet,
-                account_name: req.account.name,
-                no_of_likes : req.account.tweets[i].no_of_likes
+        const account = await Account.findById(req.params.id)
+        await account.populate('tweets').execPopulate()
+        var data = {
+            self_tweets:[],
+            liked_tweets:[]
+        }
+        var self_tweets=[]
+        for (var i = 0; i < account.tweets.length; i++) {
+            self_tweets.push({
+                tweet_id: account.tweets[i]._id,
+                tweet: account.tweets[i].tweet,
+                account_name: account.name,
+                no_of_likes : account.tweets[i].no_of_likes,
+                account_img_src:'http://localhost:5000/image/'+account.img,
+                account_id:account._id,
+                tweet_date:account.tweets[i].tweet_date,
+                liked_by:account.tweets[i].liked_by
             })
         }
-
+        const tweets = await Tweet.find({})
+        var liked_tweets=[]
+        for(var i=0;i<tweets.length;i++)
+        {
+            await tweets[i].populate('account').execPopulate()
+            for(var j=0;j<tweets[i].liked_by.length;j++)
+            {
+                if(JSON.stringify(tweets[i].liked_by[j].user_id)===JSON.stringify(account._id))
+                {
+                    liked_tweets.push({
+                        tweet_id:tweets[i]._id,
+                        tweet:tweets[i].tweet,
+                        account_name: tweets[i].account.name,
+                        no_of_likes : tweets[i].no_of_likes,
+                        account_img_src:'http://localhost:5000/image/'+tweets[i].account.img,
+                        account_id:tweets[i].account._id,
+                        tweet_date:tweets[i].tweet_date,
+                        liked_by:tweets[i].liked_by
+                    })
+                }
+            }
+        }
+        data.self_tweets=self_tweets
+        data.liked_tweets=liked_tweets
         res.send(data)
     }
     catch (e) {
+        console.log(e)
         res.status(400)
         res.send({
             ErrorMessage: 'error'
@@ -352,7 +385,7 @@ app.get('/selftweets', authMiddleware, async (req, res) => {
     }
 })
 
-app.get('/tweets', authMiddleware, async (req, res) => {
+app.get('/homeFeedTweets', authMiddleware, async (req, res) => {
     try {
         var tweets_data = await Tweet.find({})
         var self_and_following_ids = []

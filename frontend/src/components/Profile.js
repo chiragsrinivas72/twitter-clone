@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import FollowingFollowersCard from './FollowingFollowersCard';
+import ProfilePageTweets from './ProfilePageTweets.js'
 
 var ProfileCardStyle={
     position:'relative',
@@ -46,18 +47,23 @@ class Profile extends React.Component{
     {
         super(props)
         this.state={
-            selfID:"",
+            selfID:"",                      //logged in user's account_id
             following_follower_type : "",
+            //everything below is for the account of the profile being viewed
             account_username:"",
             account_name:"",
             account_followers:[],
             account_following:[],
-            account_img_src:""
+            account_img_src:"",
+            account_tweets:[],
+            account_liked_tweets:[],
+            type:'own_tweets'
         }
         this.FollowingFollowerTypeHandler=this.FollowingFollowerTypeHandler.bind(this)
         this.ClearFollowingFollowersCardHandler=this.ClearFollowingFollowersCardHandler.bind(this)
         this.getProfile=this.getProfile.bind(this)
         this.getSelfIDAndImgSrc=this.getSelfIDAndImgSrc.bind(this)
+        this.typeOfTweetsToShowHandler=this.typeOfTweetsToShowHandler.bind(this)
     }
 
     getSelfIDAndImgSrc()
@@ -96,6 +102,23 @@ class Profile extends React.Component{
                 account_followers:data.account_followers,
                 account_img_src:data.account_img_src
             })
+            return(
+                fetch('http://localhost:5000/selfAndLikedTweets/'+this.props.match.params.id,{
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization':'Bearer ' + localStorage['token']
+                    }
+                })
+            )
+        })
+        .then(res => res.json())
+        .then((data) => {
+            this.setState({
+                account_tweets:data.self_tweets,
+                account_liked_tweets:data.liked_tweets
+            })
+            //being called infinitely if this.getPeople() is in render().idk why.check later
+            //console.log(this.state)
         })
         .catch((e) => {
             console.log('e')
@@ -123,14 +146,26 @@ class Profile extends React.Component{
         })
     }
 
-    component()
+    typeOfTweetsToShowHandler(event)
     {
-        console.log("hi")
+        var chosen_option = event.target.innerHTML
+        if(chosen_option=="Liked Tweets")
+        {
+            this.setState({
+                type:'liked_tweets'
+            })
+        }
+        else
+        {
+            this.setState({
+                type:'own_tweets'
+            })
+        }
     }
 
     render()
   {
-    this.getProfile()
+    //this.getProfile()
     return(
       <div className="App" style={{height:'100%'}}>
         <SideBar history={this.props.history} self_account_id={this.state.selfID}/>
@@ -149,6 +184,7 @@ class Profile extends React.Component{
             <FollowingFollowersCard type={this.state.following_follower_type} ClearFollowingFollowersCardHandler={this.ClearFollowingFollowersCardHandler}
                 following_or_follower_data={this.state.following_follower_type=="Following" ? this.state.account_following : this.state.account_followers}
             />
+            <ProfilePageTweets tweetsArray={this.state.type==="own_tweets" ? this.state.account_tweets : this.state.account_liked_tweets} selfID = {this.state.selfID} getProfile={this.getProfile} typeOfTweetsToShowHandler={this.typeOfTweetsToShowHandler}/>
         </div>
       </div>
     )

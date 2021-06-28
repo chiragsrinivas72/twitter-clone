@@ -5,9 +5,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import {Link} from 'react-router-dom';
 
 var FollowingFollowersCardStyle={
-    position:'relative',
-    bottom:'229px',
+    position:'absolute',
     left:'1050px',
+    bottom:'23px',
     backgroundImage: 'linear-gradient(to top, #00c6fb 0%, #005bea 100%)',
     width:'600px',
     background: '#BBD2C5',

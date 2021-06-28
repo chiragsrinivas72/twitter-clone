@@ -20,7 +20,7 @@ class App extends React.Component{
 
   getTweets()
   {
-    fetch('http://localhost:5000/tweets',{
+    fetch('http://localhost:5000/homeFeedTweets',{
       headers: {
         'Content-Type': 'application/json',
         'Authorization':'Bearer ' + localStorage['token']
