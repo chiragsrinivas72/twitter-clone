@@ -63,7 +63,6 @@ class People extends React.Component{
             this.setState({
                 Following:following
             })
-            console.log(this.state.following)
         })
         .catch((e) => {
             console.log('e')

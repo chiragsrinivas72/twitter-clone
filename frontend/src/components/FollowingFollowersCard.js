@@ -42,10 +42,10 @@ class FollowingFollowersCard extends React.Component{
                     {this.props.following_or_follower_data.map((accountObject) => 
                         <div key={accountObject.account_username}>
                             <img style={ProfilePictureInFollowingFollowersCard} src={accountObject.account_img_src}/>
-                            <Link to={"/profile/"+accountObject.account_id} style={{ textDecoration: 'none' }}>
-                                <h1 style={{display:'inline',position:'relative',left:'60px'}}>{accountObject.account_name}</h1>
+                            <Link to={"/profile/"+accountObject.account_id} style={{ textDecoration: 'none'}}>
+                                <h1 style={{display:'inline',position:'relative',left:'60px',color:'#FDF5E6',fontWeight:'bold'}}>{accountObject.account_name}</h1>
                             </Link>
-                            <h1 style={{display:'inline',position:'relative',left:'280px'}}>{"@"+accountObject.account_username}</h1>
+                            <h1 style={{display:'inline',position:'relative',left:'280px',color:'#FDF5E6',fontFamily:'Times New Roman,serif'}}>{"@"+accountObject.account_username}</h1>
                         </div>
                     )} 
                 </div>

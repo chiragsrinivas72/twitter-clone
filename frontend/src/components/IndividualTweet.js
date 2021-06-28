@@ -15,15 +15,16 @@ var ProfileNameStyle={
     position:'relative',
     left:'100px',
     bottom:'80px',
-    color:'white',
-    
+    fontWeight: 'bolder',
+    color: '#F5F5F5'   
 };
 
 var TextStyle={
     position:'relative',
     left:'100px',
     bottom:'80px',
-    color:'white'
+    color:'white',
+    fontFamily:'Times New Roman,serif'
 };
 
 var IndividualTweetStyle={
@@ -192,7 +193,7 @@ class IndividualTweet extends React.Component{
         return(
             <div style={IndividualTweetStyle}>
                 <img src={this.props.account_img_src} style={ProfilePictureStyle} alt="user's profile pic"/> 
-                <Link to={"/profile/"+this.props.account_id} style={{ textDecoration: 'none' }}>
+                <Link to={"/profile/"+this.props.account_id} style={{ textDecoration: 'none'}}>
                     <h3 style={ProfileNameStyle}>{this.props.ProfileName}</h3>
                 </Link>
                 <p style={TextStyle}>{this.props.tweet}</p>

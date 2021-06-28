@@ -20,7 +20,11 @@ var PersonCardStyle={
     width:'400px',
     borderRadius:'0.9rem',
     marginLeft:'80px',
-    backgroundImage: 'linear-gradient(to right, #f46b45, #eea849)'
+    //backgroundImage: 'linear-gradient(to right, #f46b45, #eea849)'
+    background: '#108dc7',  
+    background:'-webkit-linear-gradient(#ef8e38, #108dc7)',
+    background:'linear-gradient(#ef8e38, #108dc7)'
+
 }
 
 class IndividualPerson extends React.Component{
@@ -75,10 +79,10 @@ class IndividualPerson extends React.Component{
                 <Card style={PersonCardStyle}>
                     <CardContent>
                     <img src={this.props.account_img_src} style={ProfilePictureStyle} />
-                    <Link to={"/profile/"+this.props.account_id} style={{ textDecoration: 'none' }}>
-                        <h2 style={{position:'relative',left:'170px',bottom:'80px'}}>{this.props.account_name}</h2>
+                    <Link to={"/profile/"+this.props.account_id} style={{ textDecoration: 'none'}}>
+                        <h2 style={{position:'relative',left:'170px',bottom:'80px',color:'#FDF5E6',fontWeight:'bold'}}>{this.props.account_name}</h2>
                     </Link>
-                    <h2 style={{position:'relative',left:'165px',bottom:'90px'}}>{'@'+this.props.username}</h2>
+                    <h4 style={{position:'relative',left:'170px',bottom:'95px',color: '#FDF5E6',fontFamily:'Times New Roman,serif'}}>{'@'+this.props.username}</h4>
                     <Button style={this.props.ButtonStyle} onClick={this.FollowOrUnFollowHandler}>{this.props.ButtonValue}</Button>
                     </CardContent>
                 </Card>
