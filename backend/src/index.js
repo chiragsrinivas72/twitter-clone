@@ -138,7 +138,10 @@ app.get('/accounts/:id', authMiddleware, async (req, res) => {
         account_username:account.username,
         account_following:following,
         account_followers:followers,
-        account_img_src:'http://localhost:5000/image/'+account.img
+        account_img_src:'http://localhost:5000/image/'+account.img,
+        account_city:account.city,
+        account_state:account.state,
+        account_country:account.country
     }
     res.send(data)
 })

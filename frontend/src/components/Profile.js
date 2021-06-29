@@ -57,6 +57,9 @@ class Profile extends React.Component{
             account_img_src:"",
             account_tweets:[],
             account_liked_tweets:[],
+            account_city:'',
+            account_state:'',
+            account_country:'',
             type:'own_tweets'
         }
         this.FollowingFollowerTypeHandler=this.FollowingFollowerTypeHandler.bind(this)
@@ -100,7 +103,10 @@ class Profile extends React.Component{
                 account_name:data.account_name,
                 account_following:data.account_following,
                 account_followers:data.account_followers,
-                account_img_src:data.account_img_src
+                account_img_src:data.account_img_src,
+                account_city:data.account_city,
+                account_state:data.account_state,
+                account_country:data.account_country
             })
             return(
                 fetch('http://localhost:5000/selfAndLikedTweets/'+this.props.match.params.id,{
@@ -176,7 +182,7 @@ class Profile extends React.Component{
                     <h1 style={{color:'white',position:'relative',left:'263px',bottom:'70px'}}>{this.state.account_name}</h1>
                     <h3 style={{color:'white',position:'relative',left:'263px',bottom:'90px'}}>{"@"+this.state.account_username}</h3>
                     <LocationOnIcon style={{position:'relative',left:'260px',bottom:'70px'}}></LocationOnIcon>
-                    <h3 style={{color:'white',position:'relative',left:'290px',bottom:'115px'}}>Bengaluru,Karnataka,India</h3>
+                    <h3 style={{color:'white',position:'relative',left:'290px',bottom:'115px'}}>{this.state.account_city+','+this.state.account_state+','+this.state.account_country}</h3>
                     <h3 style={FollowingInProfileCardStyle} onClick={this.FollowingFollowerTypeHandler}>{this.state.account_following.length +" Following"}</h3>
                     <h3 style={FollowersInProfileCardStyle} onClick={this.FollowingFollowerTypeHandler}>{this.state.account_followers.length +" Followers"}</h3>
                 </CardContent>
