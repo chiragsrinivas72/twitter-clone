@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors');
 require('./database/mongoose.js')
 const Account = require('./database/models/account.js')
 const Tweet = require('./database/models/tweet.js')
@@ -11,6 +12,7 @@ const multer = require('multer')
 const storage = multer.diskStorage({
     destination:function(req,file,callback){
         callback(null,'./public/images')
+        
     },
     filename:function(req,file,callback){
         callback(null,new Date().toISOString()+file.originalname)
@@ -20,6 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 app.use(express.json())
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/selfIDAndImgSrc', authMiddleware, async (req, res) => {
@@ -40,7 +43,6 @@ app.post('/accounts',upload.single('image'),async (req, res) => {
     account.tokens.push({
         token: token
     })
-
     try {
         await account.save()
         res.status(201)
@@ -524,7 +526,8 @@ app.patch('/unlikeTweet/:id', authMiddleware, async (req, res) => {
 
 app.get('/image/:imageName',function (req,res){
     var image_name = req.params.imageName
-    res.sendFile('/home/chirag/Documents/projects/twitter-clone/backend/public/images/'+image_name)
+    res.sendFile('/mnt/s/cs stuff/projects/twitter-clone/backend/public/images/'+image_name)
+    
 })
 
 app.listen(5000, () => {

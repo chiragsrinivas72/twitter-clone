@@ -198,6 +198,9 @@ class CreateAccount extends React.Component{
         form_data.append('email',this.state.email)
         form_data.append('password',this.state.password)
         form_data.append('image',input_file_ele.files[0])
+        form_data.append('city',this.state.city)
+        form_data.append('state',this.state.state)
+        form_data.append('country',this.state.country)
     
         fetch('http://localhost:5000/accounts',{
           body: form_data,
@@ -205,6 +208,7 @@ class CreateAccount extends React.Component{
         })
         .then(res => res.json())
         .then((data) => {
+            console.log(data)
             localStorage.setItem('token',data.token)
             this.props.history.push('/Home')
         })
