@@ -1,0 +1,30 @@
+services:
+  database:
+    image: mongo
+    volumes:
+      - db_data:/data/db
+    ports:
+      - '27017:27017'
+    container_name: database
+  backend:
+    build: backend
+    container_name: backend
+    volumes:
+      - profile_pictures:/app/public/images
+    ports:
+      - '5000:5000'
+    depends_on:
+      - database
+  frontend:
+    build: frontend
+    ports:
+      - '3000:3000'
+    stdin_open : true
+    tty : true
+    container_name: frontend
+    depends_on:
+      - backend
+
+volumes:
+  profile_pictures:
+  db_data:

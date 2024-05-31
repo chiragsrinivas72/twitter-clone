@@ -526,7 +526,7 @@ app.patch('/unlikeTweet/:id', authMiddleware, async (req, res) => {
 
 app.get('/image/:imageName',function (req,res){
     var image_name = req.params.imageName
-    res.sendFile('/mnt/s/cs stuff/projects/twitter-clone/backend/public/images/'+image_name)
+    res.sendFile('/app/public/images/'+image_name)
     
 })
 

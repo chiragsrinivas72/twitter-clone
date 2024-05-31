@@ -178,11 +178,16 @@ class Profile extends React.Component{
         <div style={{position:'absolute',left:'240px',top:'0px',width:'1345px',marginBottom:'180px'}} >
             <Card style={ProfileCardStyle}>
                 <CardContent>
-                    <img src={this.state.account_img_src} style={ProfilePictureStyle}></img>
+                    <img src={this.state.account_img_src} 
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src="http://localhost:5000/image/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
+                        }} 
+                    style={ProfilePictureStyle}></img>
                     <h1 style={{color:'white',position:'relative',left:'263px',bottom:'70px'}}>{this.state.account_name}</h1>
                     <h3 style={{color:'white',position:'relative',left:'263px',bottom:'90px'}}>{"@"+this.state.account_username}</h3>
                     <LocationOnIcon style={{position:'relative',left:'260px',bottom:'70px'}}></LocationOnIcon>
-                    <h3 style={{color:'white',position:'relative',left:'290px',bottom:'115px'}}>{this.state.account_city+','+this.state.account_state+','+this.state.account_country}</h3>
+                    <h3 style={{color:'white',position:'relative',left:'290px',bottom:'115px'}}>{this.state.account_city+', '+this.state.account_state+', '+this.state.account_country}</h3>
                     <h3 style={FollowingInProfileCardStyle} onClick={this.FollowingFollowerTypeHandler}>{this.state.account_following.length +" Following"}</h3>
                     <h3 style={FollowersInProfileCardStyle} onClick={this.FollowingFollowerTypeHandler}>{this.state.account_followers.length +" Followers"}</h3>
                 </CardContent>

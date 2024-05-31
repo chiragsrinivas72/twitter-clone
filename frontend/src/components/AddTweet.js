@@ -94,7 +94,12 @@ class AddTweet extends React.Component{
                 <h2 style={{position:"relative",left:'10px',color:'white',top:'15px'}}>Tweet</h2>
             </div>
             <hr style={HorizontalLineStyle}/>
-            <img src={this.props.selfImgSrc} style={ProfilePictureStyle} alt="users's profile pic"/>
+            <img src={this.props.selfImgSrc} 
+                onError={({ currentTarget }) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src="http://localhost:5000/image/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
+                        }} 
+                style={ProfilePictureStyle} alt="users's profile pic"/>
             <TextField id="standard-basic" placeholder="What's happening?" value={this.state.tweet} style={TweetBoxStyle} onChange={this.TweetHandler}/>
             <Button variant="contained" color="primary" onClick={this.AddTweetHandler} style={TweetButtonStyle}>Tweet</Button>
         </div>
